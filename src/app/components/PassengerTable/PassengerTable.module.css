@@ -1,0 +1,5 @@
+.container {
+  background: white;
+  min-height: 100vh; /* Полная высота экрана */
+  width: 100%;
+}
