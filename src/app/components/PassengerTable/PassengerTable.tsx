@@ -3,8 +3,8 @@ import React, { useState, useEffect } from "react"
 import { supabase } from "../../utils/supabase/supabaseClient"
 import { DataGrid, GridColDef, GridToolbar } from "@mui/x-data-grid"
 import Box from "@mui/material/Box"
-
 import styles from "./PassengerTable.module.css"
+import ModalForm from "../ModalForm/ModalForm"
 
 interface Passenger {
   id: string
@@ -25,59 +25,59 @@ export default function PassengeerTable() {
     {
       field: "id",
       headerName: "ID",
-      width: 70,
       sortable: false,
       filterable: false,
       disableColumnMenu: true,
+      flex: 1,
     },
 
     {
       field: "full_name",
-      headerName: "ФИО пассажира",
-      width: 160,
+      headerName: "ФИО",
       sortable: false,
       filterable: false,
       disableColumnMenu: true,
+      flex: 1,
     },
     {
       field: "phone_number",
-      headerName: "Номер телефона",
-      width: 130,
+      headerName: "НОМЕР ТЕЛЕФОНА",
       sortable: false,
       filterable: true,
       disableColumnMenu: true,
+      flex: 1,
     },
     {
       field: "current_adress",
-      headerName: "Откуда",
-      width: 130,
+      headerName: "ОТКУДА",
       sortable: false,
       filterable: false,
       disableColumnMenu: true,
+      flex: 1,
     },
     {
       field: "destination_adress",
-      headerName: "Куда",
-      width: 130,
+      headerName: "КУДА",
       sortable: false,
       filterable: false,
       disableColumnMenu: true,
+      flex: 1,
     },
     {
       field: "luggage",
-      headerName: "Багаж",
-      width: 70,
+      headerName: "БАГАЖ",
       sortable: false,
       filterable: false,
       disableColumnMenu: true,
+      flex: 1,
     },
     {
       field: "cost",
-      headerName: "Цена",
-      width: 70,
+      headerName: "ЦЕНА",
       sortable: false,
       filterable: false,
       disableColumnMenu: true,
+      width: 100,
     },
   ]
 
@@ -104,23 +104,40 @@ export default function PassengeerTable() {
         <p>Loading...</p>
       ) : (
         <div className={styles.container}>
-          <Box sx={{ height: 400, width: 1 }}>
-            <DataGrid
-              rows={dataPassenger}
-              columns={columns}
-              disableColumnFilter
-              disableColumnSelector
-              disableDensitySelector
-              slots={{ toolbar: GridToolbar }}
-              slotProps={{
-                toolbar: {
-                  showQuickFilter: true,
-                  printOptions: { disableToolbarButton: true },
-                  csvOptions: { disableToolbarButton: true },
-                },
-              }}
-            />
-          </Box>
+          <div>
+            <Box className={styles.dataGrid}>
+              <DataGrid
+                sx={{
+                  ".MuiDataGrid-columnSeparator": {
+                    display: "none",
+                  },
+                  ".MuiDataGrid-columnHeaderTitle": {
+                    fontWeight: "550 !important",
+                    color: "#1976d2 !important",
+                    fontFamily: "Roboto",
+                    letterSpacing: "1px",
+                  },
+                }}
+                rows={dataPassenger}
+                columns={columns}
+                disableColumnFilter
+                disableColumnSelector
+                disableDensitySelector
+                slots={{ toolbar: GridToolbar }}
+                slotProps={{
+                  toolbar: {
+                    showQuickFilter: true,
+                    printOptions: { disableToolbarButton: true },
+                    csvOptions: { disableToolbarButton: true },
+                  },
+                }}
+              />
+            </Box>
+
+            <div className={styles.buttonContainer}>
+              <ModalForm />
+            </div>
+          </div>
         </div>
       )}
     </div>

@@ -1,8 +1,8 @@
 import React from "react"
 import { useForm, SubmitHandler } from "react-hook-form"
-import { gql, useMutation } from "@apollo/client"
 import { FormData } from "../../types/formData"
 import { supabase } from "../../utils/supabase/supabaseClient"
+import styles from "./UserForm.module.css"
 
 const UserForm = () => {
   const {
@@ -33,32 +33,39 @@ const UserForm = () => {
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
       <input
+        className={styles.input}
         {...register("fullName", { required: true })}
         placeholder="Укажите ФИО"
       />
       <input
+        className={styles.input}
         {...register("phoneNumber", { required: true })}
         placeholder="Укажите номер телефона"
       />
       <input
+        className={styles.input}
         {...register("currentAdress", { required: true })}
         placeholder="Укажите текущий адрес"
       />
       <input
+        className={styles.input}
         {...register("destinationAdress", { required: true })}
         placeholder="Укажите адрес назначения"
       />
       <input
+        className={styles.input}
         {...register("luggage", { required: true })}
         placeholder="Укажите багаж"
       />
       <input
+        className={styles.input}
         {...register("cost", { required: true })}
         placeholder="Укажите цену"
       />
       <input
+        className={styles.input}
         type="submit"
         value="Добавить пассажира"
         style={{ letterSpacing: "5px" }}

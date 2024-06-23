@@ -13,7 +13,7 @@
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.5",
     "@mui/material": "^5.15.20",
-    "@mui/x-data-grid": "^7.7.0",
+    "@mui/x-data-grid": "^7.7.1",
     "@supabase/supabase-js": "^2.43.4",
     "concurrently": "^8.2.2",
     "graphql": "^16.8.1",
