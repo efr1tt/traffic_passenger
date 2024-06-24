@@ -1,16 +1,23 @@
 import React from "react"
-import { useForm, SubmitHandler } from "react-hook-form"
+import { useForm, SubmitHandler, Controller } from "react-hook-form"
 import { FormData } from "../../types/formData"
 import { supabase } from "../../utils/supabase/supabaseClient"
 import styles from "./UserForm.module.css"
+import DatePicker from "react-datepicker"
+import "react-datepicker/dist/react-datepicker.css"
 
 const UserForm = () => {
   const {
+    control,
     register,
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm<FormData>()
+  } = useForm<FormData>({
+    defaultValues: {
+      date: new Date(),
+    },
+  })
 
   const onSubmit: SubmitHandler<FormData> = async (data) => {
     const { error } = await supabase.from("passenger").insert([
@@ -21,6 +28,7 @@ const UserForm = () => {
         destination_adress: data.destinationAdress,
         luggage: data.luggage,
         cost: data.cost,
+        date: data.date,
       },
     ])
     if (error) {
@@ -63,6 +71,23 @@ const UserForm = () => {
         className={styles.input}
         {...register("cost", { required: true })}
         placeholder="Укажите цену"
+      />
+      <Controller
+        name="date"
+        control={control}
+        render={({ field }) => (
+          <DatePicker
+            showIcon
+            selected={field.value}
+            onChange={(
+              date: Date | null,
+              event: React.SyntheticEvent<any> | undefined
+            ) => {
+              field.onChange(date)
+            }}
+            dateFormat="MMMM d, yyyy"
+          />
+        )}
       />
       <input
         className={styles.input}

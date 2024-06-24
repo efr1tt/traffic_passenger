@@ -22,14 +22,14 @@ export default function PassengeerTable() {
   const [dataPassenger, setDataPassenger] = useState<Passenger[]>([])
 
   const columns: GridColDef[] = [
-    {
-      field: "id",
-      headerName: "ID",
-      sortable: false,
-      filterable: false,
-      disableColumnMenu: true,
-      flex: 1,
-    },
+    // {
+    //   field: "id",
+    //   headerName: "ID",
+    //   sortable: false,
+    //   filterable: false,
+    //   disableColumnMenu: true,
+    //   flex: 1,
+    // },
 
     {
       field: "full_name",
@@ -72,12 +72,24 @@ export default function PassengeerTable() {
       flex: 1,
     },
     {
+      field: "date",
+      headerName: "ДАТА ПОЕЗДКИ",
+      flex: 1,
+      sortable: false,
+      filterable: false,
+      disableColumnMenu: true,
+      renderCell: (params) => (
+        <div style={{ fontStyle: "italic" }}>{params.value}</div>
+      ),
+    },
+    {
       field: "cost",
       headerName: "ЦЕНА",
       sortable: false,
       filterable: false,
       disableColumnMenu: true,
-      width: 100,
+      flex: 1,
+      // width: 100,
     },
   ]
 
@@ -86,7 +98,7 @@ export default function PassengeerTable() {
       const { data, error } = await supabase
         .from("passenger")
         .select(
-          "id, seat_number, full_name, phone_number, current_adress, destination_adress, luggage, cost"
+          "id, seat_number, full_name, phone_number, current_adress, destination_adress, luggage, date, cost"
         )
 
       if (!error && data) {

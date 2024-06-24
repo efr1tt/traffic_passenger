@@ -5,4 +5,5 @@ export interface FormData {
   destinationAdress: string
   luggage: string
   cost: number
+  date: Date | null
 }
