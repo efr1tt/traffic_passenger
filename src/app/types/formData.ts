@@ -4,6 +4,6 @@ export interface FormData {
   currentAdress: string
   destinationAdress: string
   luggage: string
-  cost: number
+  cost: number | null | string
   date: Date | null
 }

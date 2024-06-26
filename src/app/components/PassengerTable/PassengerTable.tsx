@@ -109,7 +109,7 @@ export default function PassengeerTable() {
     fetchPassengers()
   }, [])
 
-  console.log("dataPassenger: ", dataPassenger)
+  // console.log("dataPassenger: ", dataPassenger)
   return (
     <div>
       {isLoading ? (
