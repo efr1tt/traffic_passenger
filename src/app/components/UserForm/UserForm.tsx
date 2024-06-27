@@ -48,7 +48,8 @@ const UserForm = () => {
         className={styles.input}
         {...register("fullName", {
           required: true,
-          pattern: /^[A-Za-z]+$/i,
+          // pattern: /^[A-Za-z]+$/i,
+          // pattern: /^[A-Za-z]+(?:\s+[A-Za-z]+)*$/,
         })}
         placeholder="Укажите ФИО"
       />

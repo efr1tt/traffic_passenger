@@ -1,4 +1,4 @@
-import PassengeerTable from "../components/PassengerTable/PassengerTable"
+import { PassengeerTable } from "../components/PassengerTable/PassengerTable"
 export default function Passenger() {
   return (
     <div>

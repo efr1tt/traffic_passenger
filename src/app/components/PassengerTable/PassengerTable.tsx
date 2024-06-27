@@ -1,5 +1,5 @@
 "use client"
-import React, { useState, useEffect } from "react"
+import React, { createContext, useState, useEffect } from "react"
 import { supabase } from "../../utils/supabase/supabaseClient"
 import { DataGrid, GridColDef, GridToolbar } from "@mui/x-data-grid"
 import Box from "@mui/material/Box"
@@ -17,7 +17,7 @@ interface Passenger {
   cost: number
 }
 
-export default function PassengeerTable() {
+function PassengeerTable() {
   const [isLoading, setIsLoading] = useState(true)
   const [dataPassenger, setDataPassenger] = useState<Passenger[]>([])
 
@@ -100,6 +100,7 @@ export default function PassengeerTable() {
         .select(
           "id, seat_number, full_name, phone_number, current_adress, destination_adress, luggage, date, cost"
         )
+        .order("created_at", { ascending: false })
 
       if (!error && data) {
         setIsLoading(false)
@@ -107,7 +108,7 @@ export default function PassengeerTable() {
       }
     }
     fetchPassengers()
-  }, [])
+  }, [dataPassenger])
 
   // console.log("dataPassenger: ", dataPassenger)
   return (
@@ -145,7 +146,6 @@ export default function PassengeerTable() {
                 }}
               />
             </Box>
-
             <div className={styles.buttonContainer}>
               <ModalForm />
             </div>
@@ -155,3 +155,5 @@ export default function PassengeerTable() {
     </div>
   )
 }
+
+export { PassengeerTable }
