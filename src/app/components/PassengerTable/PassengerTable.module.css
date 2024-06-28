@@ -15,3 +15,10 @@
 .buttonContainer {
   margin-top: auto; /* Автоматически выравнивает кнопку внизу контейнера */
 }
+
+@media (max-width: 600px) {
+  .container {
+    max-height: 100vh;
+    overflow: auto;
+  }
+}
