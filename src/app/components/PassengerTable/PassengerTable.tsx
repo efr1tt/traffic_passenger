@@ -17,6 +17,14 @@ interface Passenger {
   cost: number
 }
 
+interface PassengerContextType {
+  fetchPassengers: () => void
+}
+
+export const PassengerContext = createContext<PassengerContextType>({
+  fetchPassengers: () => {},
+})
+
 function PassengeerTable() {
   const [isLoading, setIsLoading] = useState(true)
   const [dataPassenger, setDataPassenger] = useState<Passenger[]>([])
@@ -89,28 +97,25 @@ function PassengeerTable() {
       filterable: false,
       disableColumnMenu: true,
       flex: 1,
-      // width: 100,
     },
   ]
+  const fetchPassengers = async () => {
+    const { data, error } = await supabase
+      .from("passenger")
+      .select(
+        "id, seat_number, full_name, phone_number, current_adress, destination_adress, luggage, date, cost"
+      )
+      .order("created_at", { ascending: false })
 
-  useEffect(() => {
-    const fetchPassengers = async () => {
-      const { data, error } = await supabase
-        .from("passenger")
-        .select(
-          "id, seat_number, full_name, phone_number, current_adress, destination_adress, luggage, date, cost"
-        )
-        .order("created_at", { ascending: false })
-
-      if (!error && data) {
-        setIsLoading(false)
-        setDataPassenger(data)
-      }
+    if (!error && data) {
+      setIsLoading(false)
+      setDataPassenger(data)
     }
+  }
+  useEffect(() => {
     fetchPassengers()
-  }, [dataPassenger])
+  }, [])
 
-  // console.log("dataPassenger: ", dataPassenger)
   return (
     <div>
       {isLoading ? (
@@ -118,37 +123,39 @@ function PassengeerTable() {
       ) : (
         <div className={styles.container}>
           <div>
-            <Box className={styles.dataGrid}>
-              <DataGrid
-                sx={{
-                  ".MuiDataGrid-columnSeparator": {
-                    display: "none",
-                  },
-                  ".MuiDataGrid-columnHeaderTitle": {
-                    fontWeight: "550 !important",
-                    color: "#1976d2 !important",
-                    fontFamily: "Roboto",
-                    letterSpacing: "1px",
-                  },
-                }}
-                rows={dataPassenger}
-                columns={columns}
-                disableColumnFilter
-                disableColumnSelector
-                disableDensitySelector
-                slots={{ toolbar: GridToolbar }}
-                slotProps={{
-                  toolbar: {
-                    showQuickFilter: true,
-                    printOptions: { disableToolbarButton: true },
-                    csvOptions: { disableToolbarButton: true },
-                  },
-                }}
-              />
-            </Box>
-            <div className={styles.buttonContainer}>
-              <ModalForm />
-            </div>
+            <PassengerContext.Provider value={{ fetchPassengers }}>
+              <Box className={styles.dataGrid}>
+                <DataGrid
+                  sx={{
+                    ".MuiDataGrid-columnSeparator": {
+                      display: "none",
+                    },
+                    ".MuiDataGrid-columnHeaderTitle": {
+                      fontWeight: "550 !important",
+                      color: "#1976d2 !important",
+                      fontFamily: "Roboto",
+                      letterSpacing: "1px",
+                    },
+                  }}
+                  rows={dataPassenger}
+                  columns={columns}
+                  disableColumnFilter
+                  disableColumnSelector
+                  disableDensitySelector
+                  slots={{ toolbar: GridToolbar }}
+                  slotProps={{
+                    toolbar: {
+                      showQuickFilter: true,
+                      printOptions: { disableToolbarButton: true },
+                      csvOptions: { disableToolbarButton: true },
+                    },
+                  }}
+                />
+              </Box>
+              <div className={styles.buttonContainer}>
+                <ModalForm />
+              </div>
+            </PassengerContext.Provider>
           </div>
         </div>
       )}

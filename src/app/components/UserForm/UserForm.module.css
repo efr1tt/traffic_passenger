@@ -72,10 +72,6 @@ p::before {
 
 .button[type="submit"],
 .input[type="button"],
-.input[type="submit"] {
-  -webkit-appearance: none;
-}
-
 .button[type="button"] {
   display: block;
   appearance: none;

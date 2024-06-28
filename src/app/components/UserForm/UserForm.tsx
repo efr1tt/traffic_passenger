@@ -1,5 +1,5 @@
 "use client"
-import React, { ChangeEvent } from "react"
+import React, { ChangeEvent, useContext } from "react"
 import { useForm, SubmitHandler, Controller } from "react-hook-form"
 import { FormData } from "../../types/formData"
 import { supabase } from "../../utils/supabase/supabaseClient"
@@ -7,6 +7,9 @@ import styles from "./UserForm.module.css"
 import DatePicker from "react-datepicker"
 import "react-datepicker/dist/react-datepicker.css"
 import { InputMask } from "primereact/inputmask"
+import { ToastContainer, toast } from "react-toastify"
+import "react-toastify/dist/ReactToastify.css"
+import { PassengerContext } from "../PassengerTable/PassengerTable"
 
 const UserForm = () => {
   const {
@@ -21,6 +24,8 @@ const UserForm = () => {
       cost: null,
     },
   })
+  const context = useContext(PassengerContext)
+  const { fetchPassengers } = context
 
   const onSubmit: SubmitHandler<FormData> = async (data) => {
     const { error } = await supabase.from("passenger").insert([
@@ -38,7 +43,8 @@ const UserForm = () => {
       console.error("Error inserting data:", error)
     } else {
       reset() // Очистите форму после успешной отправки
-      alert("Data submitted successfully!")
+      toast.success("Данные добавлены!")
+      fetchPassengers()
     }
   }
 
@@ -58,16 +64,6 @@ const UserForm = () => {
           This field is required..
         </p>
       )}
-      {/* <input
-        className={styles.input}
-        {...register("phoneNumber", { required: true })}
-        placeholder="Укажите номер телефона"
-      />
-      {errors?.phoneNumber?.type === "required" && (
-        <p style={{ color: "red", fontSize: "13px" }}>
-          This field is required..
-        </p>
-      )} */}
 
       <Controller
         name="phoneNumber"
@@ -108,12 +104,6 @@ const UserForm = () => {
         {...register("luggage")}
         placeholder="Укажите багаж"
       />
-      {/* <input
-        className={styles.input}
-        type="number"
-        {...register("cost")}
-        placeholder="Укажите цену"
-      /> */}
 
       <Controller
         name="cost"
@@ -158,6 +148,7 @@ const UserForm = () => {
         value="Добавить пассажира"
         style={{ letterSpacing: "5px" }}
       />
+      <ToastContainer />
     </form>
   )
 }
