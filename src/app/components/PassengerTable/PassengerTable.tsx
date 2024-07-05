@@ -28,6 +28,7 @@ export const PassengerContext = createContext<PassengerContextType>({
 function PassengeerTable() {
   const [isLoading, setIsLoading] = useState(true)
   const [dataPassenger, setDataPassenger] = useState<Passenger[]>([])
+  const [filterDate, setFilterDate] = useState<Date>(new Date())
 
   const columns: GridColDef[] = [
     // {
@@ -45,7 +46,8 @@ function PassengeerTable() {
       sortable: false,
       filterable: false,
       disableColumnMenu: true,
-      flex: 1,
+      width: 200,
+      // flex: 1,
     },
     {
       field: "phone_number",
@@ -53,7 +55,8 @@ function PassengeerTable() {
       sortable: false,
       filterable: true,
       disableColumnMenu: true,
-      flex: 1,
+      width: 170,
+      // flex: 1,
     },
     {
       field: "current_adress",
@@ -61,7 +64,11 @@ function PassengeerTable() {
       sortable: false,
       filterable: false,
       disableColumnMenu: true,
-      flex: 1,
+      width: 330,
+      // flex: 1,
+      renderCell: (params) => (
+        <div className={styles.wrapText}>{params.value}</div>
+      ),
     },
     {
       field: "destination_adress",
@@ -69,7 +76,11 @@ function PassengeerTable() {
       sortable: false,
       filterable: false,
       disableColumnMenu: true,
-      flex: 1,
+      width: 330,
+      // flex: 1,
+      renderCell: (params) => (
+        <div className={styles.wrapText}>{params.value}</div>
+      ),
     },
     {
       field: "luggage",
@@ -77,12 +88,17 @@ function PassengeerTable() {
       sortable: false,
       filterable: false,
       disableColumnMenu: true,
-      flex: 1,
+      width: 200,
+      // flex: 1,
+      renderCell: (params) => (
+        <div className={styles.wrapText}>{params.value}</div>
+      ),
     },
     {
       field: "date",
       headerName: "ДАТА ПОЕЗДКИ",
-      flex: 1,
+      width: 150,
+      // flex: 1,
       sortable: false,
       filterable: false,
       disableColumnMenu: true,
@@ -96,7 +112,8 @@ function PassengeerTable() {
       sortable: false,
       filterable: false,
       disableColumnMenu: true,
-      flex: 1,
+      width: 70,
+      // flex: 1,
     },
   ]
   const fetchPassengers = async () => {
@@ -139,6 +156,7 @@ function PassengeerTable() {
                   }}
                   rows={dataPassenger}
                   columns={columns}
+                  rowHeight={75}
                   disableColumnFilter
                   disableColumnSelector
                   disableDensitySelector
@@ -146,8 +164,8 @@ function PassengeerTable() {
                   slotProps={{
                     toolbar: {
                       showQuickFilter: true,
-                      printOptions: { disableToolbarButton: true },
-                      csvOptions: { disableToolbarButton: true },
+                      // printOptions: { disableToolbarButton: true },
+                      // csvOptions: { disableToolbarButton: true },
                     },
                   }}
                 />

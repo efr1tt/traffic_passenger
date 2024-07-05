@@ -22,3 +22,12 @@
     overflow: auto;
   }
 }
+
+.wrapText {
+  white-space: normal;
+  /* overflow: hidden; */
+  text-overflow: ellipsis;
+  overflow: visible;
+  line-height: 1.5; /* Регулируем высоту строки */
+  padding: 6px 10px; /* Стандартные отступы */
+}
