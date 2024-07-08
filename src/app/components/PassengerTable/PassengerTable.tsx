@@ -55,7 +55,7 @@ function PassengeerTable() {
       sortable: false,
       filterable: true,
       disableColumnMenu: true,
-      width: 170,
+      width: 190,
       // flex: 1,
     },
     {
