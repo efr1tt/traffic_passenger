@@ -48,6 +48,9 @@ function PassengeerTable() {
       disableColumnMenu: true,
       width: 200,
       // flex: 1,
+      renderCell: (params) => (
+        <div className={styles.wrapText}>{params.value}</div>
+      ),
     },
     {
       field: "phone_number",
@@ -64,7 +67,7 @@ function PassengeerTable() {
       sortable: false,
       filterable: false,
       disableColumnMenu: true,
-      width: 330,
+      width: 300,
       // flex: 1,
       renderCell: (params) => (
         <div className={styles.wrapText}>{params.value}</div>
@@ -76,7 +79,7 @@ function PassengeerTable() {
       sortable: false,
       filterable: false,
       disableColumnMenu: true,
-      width: 330,
+      width: 300,
       // flex: 1,
       renderCell: (params) => (
         <div className={styles.wrapText}>{params.value}</div>
